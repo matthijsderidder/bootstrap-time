@@ -39,4 +39,11 @@ jobs:
           npm --version
           unset NODE_AUTH_TOKEN
           npm config delete //registry.npmjs.org/:_authToken || true
-          npm publish --access public
+          version="$(node -p "require('./package.json').version")"
+          if [[ "$version" == *-* ]]; then
+            tag="${version#*-}"
+            tag="${tag%%.*}"
+            npm publish --access public --tag "$tag"
+          else
+            npm publish --access public
+          fi

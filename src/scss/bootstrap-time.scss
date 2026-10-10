@@ -1,0 +1,134 @@
+// Analog clock based on Bootstrap.
+// Source entrypoint. `npm run build` writes dist/css/bootstrap-time.css
+// and dist/css/bootstrap-time.min.css.
+
+.clock-picker {
+  position: relative;
+  width: 20rem;
+
+  input[type="time"]::-webkit-calendar-picker-indicator {
+    display: none;
+    appearance: none;
+  }
+}
+
+.clock-toggle {
+  pointer-events: auto;
+  width: 2.25rem;
+  height: 2.25rem;
+  margin: -0.25rem;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--bs-form-adorn-icon-color, var(--bs-secondary-color));
+
+  .bi {
+    font-size: 1rem;
+    line-height: 1;
+  }
+
+  &:hover,
+  &:focus-visible {
+    background-color: var(--bs-bg-3);
+    color: var(--bs-body-color);
+  }
+}
+
+.clock-widget {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 5;
+  width: 20rem;
+  margin-top: 0.25rem;
+  padding: 0.25rem 0.5rem 1rem;
+  background-color: var(--bs-secondary-bg-subtle);
+  color: var(--bs-secondary-fg);
+}
+
+.clock-arrows {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.25rem;
+}
+
+.btn.clock-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  min-height: 0;
+  padding: 0;
+  border-radius: 50%;
+  background-color: transparent;
+  color: var(--bs-body-color);
+  text-decoration: none;
+
+  svg {
+    width: 1.5rem;
+    height: 1.5rem;
+    fill: currentColor;
+  }
+
+  &:hover,
+  &:focus-visible {
+    background-color: var(--bs-bg-3);
+    color: var(--bs-body-color);
+  }
+
+  &:disabled,
+  &:disabled:hover {
+    background-color: transparent;
+    color: var(--bs-secondary-color);
+    opacity: 0.45;
+  }
+}
+
+.clock {
+  width: 16rem;
+  height: 16rem;
+  border-radius: 50%;
+}
+
+.clock-hand {
+  position: absolute;
+  left: 50%;
+  bottom: 50%;
+  width: 2px;
+  height: var(--hand);
+  transform-origin: center bottom;
+  transform: translateX(-50%) rotate(var(--angle));
+  transition: transform 0.3s ease, height 0.3s ease;
+  border-radius: 1px;
+  pointer-events: none;
+}
+
+.clock-knob {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.clock-number {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 1;
+  width: 2.25rem;
+  height: 2.25rem;
+  margin: -1.125rem;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: inherit;
+  transform: rotate(var(--angle)) translateY(calc(var(--radius) * -1)) rotate(calc(var(--angle) * -1));
+
+  &[aria-pressed="true"] {
+    color: var(--bs-white, #fff);
+  }
+}

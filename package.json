@@ -1,0 +1,68 @@
+{
+  "name": "bootstrap-time",
+  "version": "0.1.0",
+  "description": "Time picker based on Bootstrap.",
+  "author": "M. de Ridder",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matthijsderidder/bootstrap-time.git"
+  },
+  "bugs": {
+    "url": "https://github.com/matthijsderidder/bootstrap-time/issues"
+  },
+  "homepage": "https://github.com/matthijsderidder/bootstrap-time#readme",
+  "keywords": [
+    "bootstrap",
+    "clock",
+    "time",
+    "timepicker",
+    "css",
+    "scss"
+  ],
+  "files": [
+    "dist",
+    "src"
+  ],
+  "main": "./dist/js/bootstrap-time.js",
+  "module": "./dist/js/bootstrap-time.js",
+  "style": "./dist/css/bootstrap-time.css",
+  "sass": "./src/scss/bootstrap-time.scss",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "exports": {
+    ".": {
+      "style": "./dist/css/bootstrap-time.css",
+      "sass": "./src/scss/bootstrap-time.scss",
+      "import": "./dist/js/bootstrap-time.js",
+      "default": "./dist/js/bootstrap-time.js"
+    },
+    "./css": "./dist/css/bootstrap-time.css",
+    "./css/min": "./dist/css/bootstrap-time.min.css",
+    "./js": "./dist/js/bootstrap-time.js",
+    "./js/min": "./dist/js/bootstrap-time.min.js",
+    "./scss": "./src/scss/bootstrap-time.scss",
+    "./dist/*": "./dist/*",
+    "./src/*": "./src/*",
+    "./package.json": "./package.json"
+  },
+  "jsdelivr": "dist/js/bootstrap-time.min.js",
+  "unpkg": "dist/js/bootstrap-time.min.js",
+  "scripts": {
+    "build:css": "sass src/scss/bootstrap-time.scss dist/css/bootstrap-time.css --style=expanded --no-source-map && sass src/scss/bootstrap-time.scss dist/css/bootstrap-time.min.css --style=compressed --no-source-map",
+    "build:js": "mkdir -p dist/js && cp src/js/bootstrap-time.js dist/js/bootstrap-time.js && terser src/js/bootstrap-time.js --compress --mangle --output dist/js/bootstrap-time.min.js",
+    "build": "npm run build:css && npm run build:js",
+    "clean": "rm -rf dist"
+  },
+  "devDependencies": {
+    "sass": "^1.93.2",
+    "terser": "^5.44.0"
+  },
+  "peerDependencies": {
+    "bootstrap": ">=6.0.0-alpha.1"
+  },
+  "dependencies": {
+    "bootstrap-icons": "^1.13.2"
+  }
+}

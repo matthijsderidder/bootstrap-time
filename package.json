@@ -59,10 +59,8 @@
     "sass": "^1.93.2",
     "terser": "^5.44.0"
   },
-  "peerDependencies": {
-    "bootstrap": ">=6.0.0-alpha.1"
-  },
   "dependencies": {
+    "bootstrap": ">=6.0.0-alpha.1 <7",
     "bootstrap-icons": "^1.13.2"
   }
 }

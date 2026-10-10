@@ -44,7 +44,7 @@ Local builds use the same paths under `dist/`:
 <script src="dist/js/bootstrap-time.min.js"></script>
 ```
 
-The script initializes the clock when `.clock-picker`, `#clock`, `#time-input`, `#hour-arrow` and `#minute-arrow` are present. The widget overlays the form under the time input. Minute selection follows the input `step`: `60` allows every minute by clicking between the numbers or dragging the hand, `900` enables only 00, 15, 30 and 45. See `examples/bootstrap-time.html`.
+The script initializes the clock when `.clock-picker`, `#clock`, `#time-input`, `#hour-arrow` and `#minute-arrow` are present. The widget overlays the form under the time input. Minute selection follows the input `step`: `60` allows every minute by clicking between the numbers, `900` enables only 00, 15, 30 and 45. See `examples/bootstrap-time.html`.
 
 ## Changelog
 

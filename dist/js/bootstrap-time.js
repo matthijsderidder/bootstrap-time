@@ -26,8 +26,6 @@
     var minute = snapMinute(Number(initial[1]) || 0);
     var mode = "hour";
     var handAngle = 150;
-    var dragging = false;
-    var moved = false;
     var hand = document.createElement("div");
     var knob = document.createElement("span");
 
@@ -116,11 +114,7 @@
         button.setAttribute("aria-pressed", !disabled && value === selected ? "true" : "false");
         button.style.setProperty("--angle", angle + "deg");
         button.style.setProperty("--radius", inner ? INNER_RADIUS : OUTER_RADIUS);
-        button.addEventListener("click", function (event) {
-          if (moved) {
-            event.preventDefault();
-            return;
-          }
+        button.addEventListener("click", function () {
           if (button.disabled) return;
           if (mode === "hour") {
             hour = value;
@@ -165,53 +159,18 @@
       return hour12 === 0 ? 12 : hour12;
     }
 
-    function markSelected() {
-      var selected = mode === "hour" ? hour : minute;
-      clock.querySelectorAll(".clock-number").forEach(function (node) {
-        var pressed = !node.disabled && Number(node.dataset.value) === selected;
-        node.setAttribute("aria-pressed", pressed ? "true" : "false");
-      });
-    }
-
-    function applyPoint(event) {
+    clock.addEventListener("click", function (event) {
+      if (event.target.closest(".clock-number")) return;
       var value = valueFromPoint(event);
       if (mode === "minute") minute = value;
-      else hour = value;
-      writeInput();
-      moveHand();
-      markSelected();
-    }
-
-    clock.addEventListener("pointerdown", function (event) {
-      var number = event.target.closest(".clock-number");
-      if (number && number.disabled) return;
-      dragging = true;
-      moved = false;
-      hand.style.transition = "none";
-      clock.setPointerCapture(event.pointerId);
-      if (!number) applyPoint(event);
-    });
-    clock.addEventListener("pointermove", function (event) {
-      if (!dragging) return;
-      moved = true;
-      applyPoint(event);
-    });
-    function endDrag() {
-      if (!dragging) return;
-      dragging = false;
-      hand.style.transition = "";
-      if (!moved) return;
-      if (mode === "hour") {
+      else {
+        hour = value;
         mode = "minute";
-        updateArrows();
       }
+      writeInput();
+      updateArrows();
       renderClock();
-      window.setTimeout(function () {
-        moved = false;
-      }, 0);
-    }
-    clock.addEventListener("pointerup", endDrag);
-    clock.addEventListener("pointercancel", endDrag);
+    });
 
     hourArrow.addEventListener("click", function () {
       showMode("hour");

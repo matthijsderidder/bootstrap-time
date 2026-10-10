@@ -18,7 +18,10 @@
     var clockToggle = document.querySelector("#clock-toggle");
     if (!clock || !timeInput || !hourArrow || !minuteArrow) return;
 
-    var initial = (timeInput.value || "17:00").split(":");
+    var now = new Date();
+    var initial = timeInput.value
+      ? timeInput.value.split(":")
+      : [now.getHours(), now.getMinutes()];
     var hour = Number(initial[0]) || 0;
     var minute = Number(initial[1]) || 0;
     var mode = "hour";

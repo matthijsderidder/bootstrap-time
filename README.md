@@ -33,8 +33,8 @@ Or load the published files from jsDelivr:
 ```html
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@6.0.0-alpha.1/dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.2/font/bootstrap-icons.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-time@0.1.0/dist/css/bootstrap-time.min.css">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-time@0.1.0/dist/js/bootstrap-time.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-time@0.1.1/dist/css/bootstrap-time.min.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-time@0.1.1/dist/js/bootstrap-time.min.js"></script>
 ```
 
 Local builds use the same paths under `dist/`:

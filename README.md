@@ -45,3 +45,23 @@ Local builds use the same paths under `dist/`:
 ```
 
 The script initializes the clock when `.clock-picker`, `#clock`, `#time-input`, `#hour-arrow` and `#minute-arrow` are present. The widget overlays the form under the time input. See `examples/bootstrap-time.html`.
+
+## Changelog
+
+### 0.1.2-beta
+
+- Published as a beta. It does not replace the `latest` tag.
+- Prerelease publishes use their npm dist-tag.
+
+### 0.1.1
+
+- Published release after the repository reset.
+
+### 0.1.0
+
+- Initial release.
+- Analog clock under a time input, with a clock icon.
+- Hour and minute arrows. The hand follows hour and minute changes.
+- Hand and selection knob use Bootstrap primary.
+- Widget uses `theme-secondary theme-subtle`. The clock face uses `theme-inverse theme-subtle`.
+- Requires Bootstrap 6 for form adornments.

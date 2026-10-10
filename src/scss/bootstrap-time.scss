@@ -89,6 +89,8 @@
   width: 16rem;
   height: 16rem;
   border-radius: 50%;
+  touch-action: none;
+  cursor: pointer;
 }
 
 .clock-hand {
@@ -130,5 +132,10 @@
 
   &[aria-pressed="true"] {
     color: var(--bs-white, #fff);
+  }
+
+  &:disabled {
+    opacity: 0.35;
+    cursor: default;
   }
 }

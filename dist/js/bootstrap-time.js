@@ -23,9 +23,11 @@
       ? timeInput.value.split(":")
       : [now.getHours(), now.getMinutes()];
     var hour = Number(initial[0]) || 0;
-    var minute = Number(initial[1]) || 0;
+    var minute = snapMinute(Number(initial[1]) || 0);
     var mode = "hour";
     var handAngle = 150;
+    var dragging = false;
+    var moved = false;
     var hand = document.createElement("div");
     var knob = document.createElement("span");
 
@@ -37,6 +39,22 @@
 
     function pad(value) {
       return String(value).padStart(2, "0");
+    }
+
+    function minuteStep() {
+      var step = Number(timeInput.getAttribute("step") || timeInput.step);
+      if (!step || step < 60) step = 60;
+      return Math.max(1, Math.round(step / 60));
+    }
+
+    function snapMinute(value) {
+      var step = minuteStep();
+      var snapped = Math.round(value / step) * step;
+      return ((snapped % 60) + 60) % 60;
+    }
+
+    function allowedMinute(value) {
+      return value % minuteStep() === 0;
     }
 
     function targetAngle() {
@@ -88,14 +106,22 @@
         var button = document.createElement("button");
         var inner = mode === "hour" && index >= 12;
         var angle = (mode === "hour" ? index % 12 : index) * 30;
+        var disabled = mode === "minute" && !allowedMinute(value);
 
         button.type = "button";
         button.className = "clock-number";
-        button.textContent = mode === "hour" && value === 0 ? "00" : String(value);
-        button.setAttribute("aria-pressed", value === selected ? "true" : "false");
+        button.textContent = value === 0 ? "00" : String(value);
+        button.dataset.value = String(value);
+        button.disabled = disabled;
+        button.setAttribute("aria-pressed", !disabled && value === selected ? "true" : "false");
         button.style.setProperty("--angle", angle + "deg");
         button.style.setProperty("--radius", inner ? INNER_RADIUS : OUTER_RADIUS);
-        button.addEventListener("click", function () {
+        button.addEventListener("click", function (event) {
+          if (moved) {
+            event.preventDefault();
+            return;
+          }
+          if (button.disabled) return;
           if (mode === "hour") {
             hour = value;
             mode = "minute";
@@ -126,6 +152,66 @@
       if (widget && widget.hidden) showWidget();
       else hideWidget();
     }
+
+    function valueFromPoint(event) {
+      var rect = clock.getBoundingClientRect();
+      var dx = event.clientX - (rect.left + rect.width / 2);
+      var dy = event.clientY - (rect.top + rect.height / 2);
+      var angle = (Math.atan2(dx, -dy) * 180 / Math.PI + 360) % 360;
+      if (mode === "minute") return snapMinute(Math.round(angle / 6) % 60);
+      var hour12 = Math.round(angle / 30) % 12;
+      var inner = Math.hypot(dx, dy) < rect.width * 0.32;
+      if (inner) return hour12 === 0 ? 0 : hour12 + 12;
+      return hour12 === 0 ? 12 : hour12;
+    }
+
+    function markSelected() {
+      var selected = mode === "hour" ? hour : minute;
+      clock.querySelectorAll(".clock-number").forEach(function (node) {
+        var pressed = !node.disabled && Number(node.dataset.value) === selected;
+        node.setAttribute("aria-pressed", pressed ? "true" : "false");
+      });
+    }
+
+    function applyPoint(event) {
+      var value = valueFromPoint(event);
+      if (mode === "minute") minute = value;
+      else hour = value;
+      writeInput();
+      moveHand();
+      markSelected();
+    }
+
+    clock.addEventListener("pointerdown", function (event) {
+      var number = event.target.closest(".clock-number");
+      if (number && number.disabled) return;
+      dragging = true;
+      moved = false;
+      hand.style.transition = "none";
+      clock.setPointerCapture(event.pointerId);
+      if (!number) applyPoint(event);
+    });
+    clock.addEventListener("pointermove", function (event) {
+      if (!dragging) return;
+      moved = true;
+      applyPoint(event);
+    });
+    function endDrag() {
+      if (!dragging) return;
+      dragging = false;
+      hand.style.transition = "";
+      if (!moved) return;
+      if (mode === "hour") {
+        mode = "minute";
+        updateArrows();
+      }
+      renderClock();
+      window.setTimeout(function () {
+        moved = false;
+      }, 0);
+    }
+    clock.addEventListener("pointerup", endDrag);
+    clock.addEventListener("pointercancel", endDrag);
 
     hourArrow.addEventListener("click", function () {
       showMode("hour");

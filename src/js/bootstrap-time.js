@@ -206,6 +206,30 @@
       hideWidget();
     });
 
+    function applyStep() {
+      minute = snapMinute(minute);
+      writeInput();
+      renderClock();
+    }
+
+    var stepDescriptor = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, "step");
+    if (stepDescriptor && stepDescriptor.set) {
+      Object.defineProperty(timeInput, "step", {
+        configurable: true,
+        get: function () {
+          return stepDescriptor.get.call(timeInput);
+        },
+        set: function (value) {
+          stepDescriptor.set.call(timeInput, value);
+          applyStep();
+        }
+      });
+    }
+    new MutationObserver(applyStep).observe(timeInput, {
+      attributes: true,
+      attributeFilter: ["step"]
+    });
+
     updateArrows();
     writeInput();
     renderClock();

@@ -33,8 +33,8 @@ Or load the published files from jsDelivr:
 ```html
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@6.0.0-alpha.1/dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.2/font/bootstrap-icons.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-time@0.1.6-beta/dist/css/bootstrap-time.min.css">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-time@0.1.6-beta/dist/js/bootstrap-time.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-time@0.1.7-beta/dist/css/bootstrap-time.min.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-time@0.1.7-beta/dist/js/bootstrap-time.min.js"></script>
 ```
 
 Local builds use the same paths under `dist/`:
@@ -54,6 +54,10 @@ Add `bs-time` to a time field. The script builds the clock and places it under t
 Minute selection follows the input `step`, including when `step` changes: `60` allows every minute by clicking between the numbers, `900` enables only 00, 15, 30 and 45. See `examples/bootstrap-time.html`.
 
 ## Changelog
+
+### 0.1.7-beta
+
+- Attach the clock to any field with class `bs-time`.
 
 ### 0.1.6-beta
 

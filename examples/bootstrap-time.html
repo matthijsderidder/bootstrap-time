@@ -11,27 +11,9 @@
 <body>
   <div class="container p-4">
     <h1 class="h3 mb-3">Bootstrap Time</h1>
-    <form class="clock-form">
-      <div class="clock-picker">
-        <label class="form-label" for="time-input">Time</label>
-        <div class="form-control form-adorn form-adorn-end">
-          <button class="form-adorn-icon clock-toggle" type="button" id="clock-toggle" aria-label="Klok" aria-pressed="false">
-            <i class="bi bi-clock" aria-hidden="true"></i>
-          </button>
-          <input type="time" class="form-ghost" id="time-input" step="60" lang="nl">
-        </div>
-        <div class="clock-widget card theme-secondary theme-subtle" id="clock-widget">
-          <div class="clock-arrows">
-            <button class="btn btn-link clock-arrow" type="button" id="hour-arrow" aria-label="Uren" disabled>
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.41 16.59 10.83 12l4.58-4.59L14 6l-6 6 6 6z"/></svg>
-            </button>
-            <button class="btn btn-link clock-arrow" type="button" id="minute-arrow" aria-label="Minuten">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
-            </button>
-          </div>
-          <div class="clock position-relative mx-auto theme-inverse theme-subtle" id="clock" role="group" aria-label="Kies een uur"></div>
-        </div>
-      </div>
+    <form class="col-md-6">
+      <label class="form-label" for="time-input">Time</label>
+      <input type="time" class="form-control bs-time" id="time-input" step="60" lang="nl">
     </form>
   </div>
   <script src="../dist/js/bootstrap-time.min.js"></script>

@@ -7,20 +7,69 @@
 
   var INNER_RADIUS = "4.6rem";
   var OUTER_RADIUS = "6.4rem";
+  var LEFT = "M15.41 16.59 10.83 12l4.58-4.59L14 6l-6 6 6 6z";
+  var RIGHT = "M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6z";
 
-  function init() {
-    var picker = document.querySelector(".clock-picker");
-    var clock = document.querySelector("#clock");
-    var widget = document.querySelector("#clock-widget");
-    var timeInput = document.querySelector("#time-input");
-    var hourArrow = document.querySelector("#hour-arrow");
-    var minuteArrow = document.querySelector("#minute-arrow");
-    var clockToggle = document.querySelector("#clock-toggle");
-    if (!clock || !timeInput || !hourArrow || !minuteArrow) return;
+  function svg(path) {
+    return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="' + path + '"></path></svg>';
+  }
+
+  function mount(field) {
+    if (field.dataset.bsTime === "ready") return;
+    field.dataset.bsTime = "ready";
+
+    var host = field.closest(".form-control") || field;
+    var picker = host.closest(".clock-picker");
+    if (!picker) {
+      picker = document.createElement("div");
+      picker.className = "clock-picker";
+      host.parentNode.insertBefore(picker, host);
+      picker.append(host);
+    }
+
+    var adorn = field.closest(".form-adorn");
+    if (!adorn && field.classList.contains("form-control")) {
+      adorn = document.createElement("div");
+      adorn.className = "form-control form-adorn form-adorn-end";
+      field.parentNode.insertBefore(adorn, field);
+      adorn.append(field);
+      field.classList.remove("form-control");
+      field.classList.add("form-ghost");
+    }
+
+    var toggle = picker.querySelector(".clock-toggle");
+    if (!toggle && adorn) {
+      toggle = document.createElement("button");
+      toggle.type = "button";
+      toggle.className = "form-adorn-icon clock-toggle";
+      toggle.setAttribute("aria-label", "Klok");
+      toggle.setAttribute("aria-pressed", "false");
+      toggle.innerHTML = '<i class="bi bi-clock" aria-hidden="true"></i>';
+      adorn.insertBefore(toggle, adorn.firstChild);
+    }
+
+    var widget = picker.querySelector(".clock-widget");
+    if (!widget) {
+      widget = document.createElement("div");
+      widget.className = "clock-widget card theme-secondary theme-subtle";
+      widget.hidden = true;
+      widget.innerHTML =
+        '<div class="clock-arrows">' +
+          '<button class="btn btn-link clock-arrow clock-hour" type="button" aria-label="Uren">' + svg(LEFT) + "</button>" +
+          '<button class="btn btn-link clock-arrow clock-minute" type="button" aria-label="Minuten">' + svg(RIGHT) + "</button>" +
+        "</div>" +
+        '<div class="clock position-relative mx-auto theme-inverse theme-subtle" role="group" aria-label="Kies een uur"></div>';
+      picker.append(widget);
+    }
+
+    var clock = widget.querySelector(".clock");
+    var hourArrow = widget.querySelector(".clock-hour");
+    var minuteArrow = widget.querySelector(".clock-minute");
+    if (!clock || !hourArrow || !minuteArrow) return;
 
     var now = new Date();
-    var initial = timeInput.value
-      ? timeInput.value.split(":")
+    var initial = field.value
+      ? field.value.split(":")
       : [now.getHours(), now.getMinutes()];
     var hour = Number(initial[0]) || 0;
     var minute = snapMinute(Number(initial[1]) || 0);
@@ -40,7 +89,7 @@
     }
 
     function minuteStep() {
-      var step = Number(timeInput.getAttribute("step") || timeInput.step);
+      var step = Number(field.getAttribute("step") || field.step);
       if (!step || step < 60) step = 60;
       return Math.max(1, Math.round(step / 60));
     }
@@ -78,7 +127,7 @@
     }
 
     function writeInput() {
-      timeInput.value = pad(hour) + ":" + pad(minute);
+      field.value = pad(hour) + ":" + pad(minute);
     }
 
     function showMode(nextMode) {
@@ -131,19 +180,17 @@
     }
 
     function showWidget() {
-      if (!widget) return;
       widget.hidden = false;
-      if (clockToggle) clockToggle.setAttribute("aria-pressed", "true");
+      if (toggle) toggle.setAttribute("aria-pressed", "true");
     }
 
     function hideWidget() {
-      if (!widget) return;
       widget.hidden = true;
-      if (clockToggle) clockToggle.setAttribute("aria-pressed", "false");
+      if (toggle) toggle.setAttribute("aria-pressed", "false");
     }
 
     function toggleWidget() {
-      if (widget && widget.hidden) showWidget();
+      if (widget.hidden) showWidget();
       else hideWidget();
     }
 
@@ -178,13 +225,11 @@
     minuteArrow.addEventListener("click", function () {
       showMode("minute");
     });
-    if (clockToggle) {
-      clockToggle.addEventListener("click", toggleWidget);
-    }
-    timeInput.addEventListener("focus", showWidget);
-    timeInput.addEventListener("input", function () {
-      if (!timeInput.value) return;
-      var parts = timeInput.value.split(":");
+    if (toggle) toggle.addEventListener("click", toggleWidget);
+    field.addEventListener("focus", showWidget);
+    field.addEventListener("input", function () {
+      if (!field.value) return;
+      var parts = field.value.split(":");
       var nextHour = Number(parts[0]);
       var nextMinute = Number(parts[1]);
       if (nextMinute !== minute) mode = "minute";
@@ -194,46 +239,48 @@
       updateArrows();
       renderClock();
     });
-    if (picker) {
-      picker.addEventListener("mousedown", function (event) {
-        if (event.target === timeInput) return;
-        if (clockToggle && clockToggle.contains(event.target)) return;
-        event.preventDefault();
-      });
-    }
+    picker.addEventListener("mousedown", function (event) {
+      if (event.target === field) return;
+      if (toggle && toggle.contains(event.target)) return;
+      event.preventDefault();
+    });
     document.addEventListener("mousedown", function (event) {
-      if (!picker || picker.contains(event.target)) return;
+      if (picker.contains(event.target)) return;
       hideWidget();
     });
 
     function applyStep() {
       minute = snapMinute(minute);
-      writeInput();
+      field.value = pad(hour) + ":" + pad(minute);
       renderClock();
     }
 
     var stepDescriptor = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, "step");
     if (stepDescriptor && stepDescriptor.set) {
-      Object.defineProperty(timeInput, "step", {
+      Object.defineProperty(field, "step", {
         configurable: true,
         get: function () {
-          return stepDescriptor.get.call(timeInput);
+          return stepDescriptor.get.call(field);
         },
         set: function (value) {
-          stepDescriptor.set.call(timeInput, value);
+          stepDescriptor.set.call(field, value);
           applyStep();
         }
       });
     }
-    new MutationObserver(applyStep).observe(timeInput, {
+    new MutationObserver(applyStep).observe(field, {
       attributes: true,
       attributeFilter: ["step"]
     });
 
     updateArrows();
-    writeInput();
+    if (!field.value) field.value = pad(hour) + ":" + pad(minute);
     renderClock();
     hideWidget();
+  }
+
+  function init() {
+    document.querySelectorAll(".bs-time").forEach(mount);
   }
 
   if (document.readyState === "loading") {

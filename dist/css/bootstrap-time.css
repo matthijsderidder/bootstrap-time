@@ -1,6 +1,5 @@
 .clock-picker {
   position: relative;
-  width: 20rem;
 }
 .clock-picker input[type=time]::-webkit-calendar-picker-indicator {
   display: none;

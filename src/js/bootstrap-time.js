@@ -208,6 +208,20 @@
     minuteArrow.addEventListener("click", function () {
       showMode("minute");
     });
+    field.addEventListener("mousedown", function (event) {
+      event.preventDefault();
+      field.focus();
+    });
+    field.addEventListener("click", function (event) {
+      event.preventDefault();
+      showWidget();
+    });
+    field.addEventListener("keydown", function (event) {
+      if (event.key === " " || event.key === "Enter" || (event.altKey && event.key === "ArrowDown")) {
+        event.preventDefault();
+        showWidget();
+      }
+    });
     field.addEventListener("focus", showWidget);
     field.addEventListener("blur", hideWidget);
     widget.addEventListener("mousedown", function (event) {

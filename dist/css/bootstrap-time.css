@@ -1,14 +1,12 @@
 .clock-picker {
-  position: relative;
+  display: contents;
 }
 
 .clock-widget {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  z-index: 5;
+  position: fixed;
+  z-index: 1080;
   width: 20rem;
-  margin-top: 0.25rem;
+  margin: 0;
   padding: 0.25rem 0.5rem 1rem;
   background-color: var(--bs-secondary-bg);
   color: var(--bs-body-color);

@@ -39,6 +39,16 @@
         "</div>" +
         '<div class="clock position-relative mx-auto bg-body-tertiary" role="group" aria-label="Kies een uur"></div>';
       picker.append(widget);
+      document.body.append(widget);
+    }
+
+    function placeWidget() {
+      var rect = field.getBoundingClientRect();
+      var width = widget.offsetWidth || 320;
+      var left = rect.left;
+      if (left + width > window.innerWidth - 8) left = Math.max(8, window.innerWidth - width - 8);
+      widget.style.top = Math.round(rect.bottom + 4) + "px";
+      widget.style.left = Math.round(left) + "px";
     }
 
     var clock = widget.querySelector(".clock");
@@ -160,6 +170,7 @@
 
     function showWidget() {
       widget.hidden = false;
+      placeWidget();
     }
 
     function hideWidget() {
@@ -199,6 +210,15 @@
     });
     field.addEventListener("focus", showWidget);
     field.addEventListener("blur", hideWidget);
+    widget.addEventListener("mousedown", function (event) {
+      event.preventDefault();
+    });
+    document.addEventListener("mousedown", function (event) {
+      if (field === event.target || widget.contains(event.target)) return;
+      hideWidget();
+    });
+    window.addEventListener("resize", placeWidget);
+    window.addEventListener("scroll", placeWidget, true);
     field.addEventListener("input", function () {
       if (!field.value) return;
       var parts = field.value.split(":");
@@ -210,14 +230,6 @@
       minute = nextMinute;
       updateArrows();
       renderClock();
-    });
-    picker.addEventListener("mousedown", function (event) {
-      if (event.target === field) return;
-      event.preventDefault();
-    });
-    document.addEventListener("mousedown", function (event) {
-      if (picker.contains(event.target)) return;
-      hideWidget();
     });
 
     function applyStep() {

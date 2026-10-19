@@ -32,8 +32,8 @@ Or load the published files from jsDelivr:
 
 ```html
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-time@0.2.4-beta/dist/css/bootstrap-time.min.css">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-time@0.2.4-beta/dist/js/bootstrap-time.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-time@0.3.0/dist/css/bootstrap-time.min.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-time@0.3.0/dist/js/bootstrap-time.min.js"></script>
 ```
 
 Local builds use the same paths under `dist/`:
@@ -43,7 +43,7 @@ Local builds use the same paths under `dist/`:
 <script src="dist/js/bootstrap-time.min.js"></script>
 ```
 
-Add `bs-time` to a time field. The script builds the clock and places it under that field, so it works in an existing Bootstrap form.
+Add `bs-time` to a time field. The script leaves the field untouched and opens the clock as a fixed overlay, so it works in an existing Bootstrap form.
 
 ```html
 <label class="form-label" for="time">Time</label>
@@ -54,54 +54,16 @@ Minute selection follows the input `step`, including when `step` changes: `60` a
 
 ## Changelog
 
-### 0.2.4-beta
+### 0.3.0
 
+- Stable release.
+- Requires Bootstrap 5.3.8.
 - The field stays untouched. The clock is a fixed overlay.
-
-### 0.2.3-beta
-
 - The native time picker no longer opens. The browser icon stays.
-
-### 0.2.2-beta
-
-- The clock overlays the form and no longer stretches a smaller field.
-
-### 0.2.1-beta
-
-- Requires Bootstrap 5.3.8 instead of Bootstrap 6.
-- Removed the adorn button. The browser time icon stays, and focus and blur still open and close the clock.
 
 ### 0.2.0
 
 - Stable release. Attach the clock to any field with class `bs-time`.
-
-### 0.1.7-beta
-
-- Attach the clock to any field with class `bs-time`.
-
-### 0.1.6-beta
-
-- The example starts on the current time.
-- Minute selection follows the input `step`, including when it changes.
-- `step="60"` selects any minute by clicking between the numbers.
-- `step="900"` enables only 00, 15, 30 and 45.
-
-### 0.1.5-beta
-
-- Release title uses `<version>-beta`.
-
-### 0.1.4-beta
-
-- Bootstrap 6 is a dependency.
-
-### 0.1.3-beta
-
-- Added a version changelog to the README.
-
-### 0.1.2-beta
-
-- Published as a beta. It does not replace the `latest` tag.
-- Prerelease publishes use their npm dist-tag.
 
 ### 0.1.1
 
@@ -110,8 +72,6 @@ Minute selection follows the input `step`, including when `step` changes: `60` a
 ### 0.1.0
 
 - Initial release.
-- Analog clock under a time input, with a clock icon.
+- Analog clock under a time input.
 - Hour and minute arrows. The hand follows hour and minute changes.
 - Hand and selection knob use Bootstrap primary.
-- Widget uses `theme-secondary theme-subtle`. The clock face uses `theme-inverse theme-subtle`.
-- Requires Bootstrap 6 for form adornments.

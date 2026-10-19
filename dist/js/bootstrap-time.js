@@ -27,38 +27,17 @@
       picker.append(host);
     }
 
-    var adorn = field.closest(".form-adorn");
-    if (!adorn && field.classList.contains("form-control")) {
-      adorn = document.createElement("div");
-      adorn.className = "form-control form-adorn form-adorn-end";
-      field.parentNode.insertBefore(adorn, field);
-      adorn.append(field);
-      field.classList.remove("form-control");
-      field.classList.add("form-ghost");
-    }
-
-    var toggle = picker.querySelector(".clock-toggle");
-    if (!toggle && adorn) {
-      toggle = document.createElement("button");
-      toggle.type = "button";
-      toggle.className = "form-adorn-icon clock-toggle";
-      toggle.setAttribute("aria-label", "Klok");
-      toggle.setAttribute("aria-pressed", "false");
-      toggle.innerHTML = '<i class="bi bi-clock" aria-hidden="true"></i>';
-      adorn.insertBefore(toggle, adorn.firstChild);
-    }
-
     var widget = picker.querySelector(".clock-widget");
     if (!widget) {
       widget = document.createElement("div");
-      widget.className = "clock-widget card theme-secondary theme-subtle";
+      widget.className = "clock-widget card bg-body-secondary";
       widget.hidden = true;
       widget.innerHTML =
         '<div class="clock-arrows">' +
           '<button class="btn btn-link clock-arrow clock-hour" type="button" aria-label="Uren">' + svg(LEFT) + "</button>" +
           '<button class="btn btn-link clock-arrow clock-minute" type="button" aria-label="Minuten">' + svg(RIGHT) + "</button>" +
         "</div>" +
-        '<div class="clock position-relative mx-auto theme-inverse theme-subtle" role="group" aria-label="Kies een uur"></div>';
+        '<div class="clock position-relative mx-auto bg-body-tertiary" role="group" aria-label="Kies een uur"></div>';
       picker.append(widget);
     }
 
@@ -181,17 +160,10 @@
 
     function showWidget() {
       widget.hidden = false;
-      if (toggle) toggle.setAttribute("aria-pressed", "true");
     }
 
     function hideWidget() {
       widget.hidden = true;
-      if (toggle) toggle.setAttribute("aria-pressed", "false");
-    }
-
-    function toggleWidget() {
-      if (widget.hidden) showWidget();
-      else hideWidget();
     }
 
     function valueFromPoint(event) {
@@ -225,8 +197,8 @@
     minuteArrow.addEventListener("click", function () {
       showMode("minute");
     });
-    if (toggle) toggle.addEventListener("click", toggleWidget);
     field.addEventListener("focus", showWidget);
+    field.addEventListener("blur", hideWidget);
     field.addEventListener("input", function () {
       if (!field.value) return;
       var parts = field.value.split(":");
@@ -241,7 +213,6 @@
     });
     picker.addEventListener("mousedown", function (event) {
       if (event.target === field) return;
-      if (toggle && toggle.contains(event.target)) return;
       event.preventDefault();
     });
     document.addEventListener("mousedown", function (event) {

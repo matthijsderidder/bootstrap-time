@@ -18,7 +18,7 @@ dist/                        generated, do not edit
 examples/                    HTML that points at dist
 ```
 
-`npm run build` compiles `src` into `dist`. Bootstrap 6 is required. The time field uses [form adornments](https://getbootstrap.com/docs/6.0/forms/form-adorn/), which Bootstrap 5.3 does not have. Bootstrap 5.3 can only place an addon beside the input with `input-group`, not inside it. The clock icon comes from bootstrap-icons.
+`npm run build` compiles `src` into `dist`. Bootstrap 5.3.8 or later 5.3 is required. The browser supplies the time field icon. Focus opens the clock and blur closes it.
 
 ## Usage
 
@@ -31,10 +31,9 @@ npm install bootstrap-time
 Or load the published files from jsDelivr:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@6.0.0-alpha.1/dist/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.2/font/bootstrap-icons.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-time@0.2.0/dist/css/bootstrap-time.min.css">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-time@0.2.0/dist/js/bootstrap-time.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-time@0.1.8-beta/dist/css/bootstrap-time.min.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-time@0.1.8-beta/dist/js/bootstrap-time.min.js"></script>
 ```
 
 Local builds use the same paths under `dist/`:
@@ -54,6 +53,11 @@ Add `bs-time` to a time field. The script builds the clock and places it under t
 Minute selection follows the input `step`, including when `step` changes: `60` allows every minute by clicking between the numbers, `900` enables only 00, 15, 30 and 45. See `examples/bootstrap-time.html`.
 
 ## Changelog
+
+### 0.1.8-beta
+
+- Requires Bootstrap 5.3.8 instead of Bootstrap 6.
+- Removed the adorn button. The browser time icon stays, and focus and blur still open and close the clock.
 
 ### 0.2.0
 

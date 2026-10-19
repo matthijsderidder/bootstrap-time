@@ -1,29 +1,6 @@
 .clock-picker {
   position: relative;
 }
-.clock-picker input[type=time]::-webkit-calendar-picker-indicator {
-  display: none;
-  appearance: none;
-}
-
-.clock-toggle {
-  pointer-events: auto;
-  width: 2.25rem;
-  height: 2.25rem;
-  margin: -0.25rem;
-  border: 0;
-  border-radius: 50%;
-  background: transparent;
-  color: var(--bs-form-adorn-icon-color, var(--bs-secondary-color));
-}
-.clock-toggle .bi {
-  font-size: 1rem;
-  line-height: 1;
-}
-.clock-toggle:hover, .clock-toggle:focus-visible {
-  background-color: var(--bs-bg-3);
-  color: var(--bs-body-color);
-}
 
 .clock-widget {
   position: absolute;
@@ -33,8 +10,8 @@
   width: 20rem;
   margin-top: 0.25rem;
   padding: 0.25rem 0.5rem 1rem;
-  background-color: var(--bs-secondary-bg-subtle);
-  color: var(--bs-secondary-fg);
+  background-color: var(--bs-secondary-bg);
+  color: var(--bs-body-color);
 }
 
 .clock-arrows {
@@ -62,7 +39,7 @@
   fill: currentColor;
 }
 .btn.clock-arrow:hover, .btn.clock-arrow:focus-visible {
-  background-color: var(--bs-bg-3);
+  background-color: var(--bs-tertiary-bg);
   color: var(--bs-body-color);
 }
 .btn.clock-arrow:disabled, .btn.clock-arrow:disabled:hover {

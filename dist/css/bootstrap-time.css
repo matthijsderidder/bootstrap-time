@@ -1,7 +1,3 @@
-.clock-picker {
-  display: contents;
-}
-
 .bs-time::-webkit-calendar-picker-indicator {
   pointer-events: none;
 }
@@ -14,6 +10,7 @@
   padding: 0.25rem 0.5rem 1rem;
   background-color: var(--bs-secondary-bg);
   color: var(--bs-body-color);
+  pointer-events: auto;
 }
 
 .clock-arrows {

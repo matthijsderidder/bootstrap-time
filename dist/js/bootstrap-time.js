@@ -18,35 +18,24 @@
     if (field.dataset.bsTime === "ready") return;
     field.dataset.bsTime = "ready";
 
-    var host = field.closest(".form-control") || field;
-    var picker = host.closest(".clock-picker");
-    if (!picker) {
-      picker = document.createElement("div");
-      picker.className = "clock-picker";
-      host.parentNode.insertBefore(picker, host);
-      picker.append(host);
-    }
-
-    var widget = picker.querySelector(".clock-widget");
-    if (!widget) {
-      widget = document.createElement("div");
-      widget.className = "clock-widget card bg-body-secondary";
-      widget.hidden = true;
-      widget.innerHTML =
-        '<div class="clock-arrows">' +
-          '<button class="btn btn-link clock-arrow clock-hour" type="button" aria-label="Uren">' + svg(LEFT) + "</button>" +
-          '<button class="btn btn-link clock-arrow clock-minute" type="button" aria-label="Minuten">' + svg(RIGHT) + "</button>" +
-        "</div>" +
-        '<div class="clock position-relative mx-auto bg-body-tertiary" role="group" aria-label="Kies een uur"></div>';
-      picker.append(widget);
-      document.body.append(widget);
-    }
+    var widget = document.createElement("div");
+    widget.className = "clock-widget card bg-body-secondary";
+    widget.hidden = true;
+    widget.innerHTML =
+      '<div class="clock-arrows">' +
+        '<button class="btn btn-link clock-arrow clock-hour" type="button" aria-label="Uren">' + svg(LEFT) + "</button>" +
+        '<button class="btn btn-link clock-arrow clock-minute" type="button" aria-label="Minuten">' + svg(RIGHT) + "</button>" +
+      "</div>" +
+      '<div class="clock position-relative mx-auto bg-body-tertiary" role="group" aria-label="Kies een uur"></div>';
+    document.body.append(widget);
 
     function placeWidget() {
       var rect = field.getBoundingClientRect();
       var width = widget.offsetWidth || 320;
       var left = rect.left;
       if (left + width > window.innerWidth - 8) left = Math.max(8, window.innerWidth - width - 8);
+      widget.style.position = "fixed";
+      widget.style.zIndex = "1080";
       widget.style.top = Math.round(rect.bottom + 4) + "px";
       widget.style.left = Math.round(left) + "px";
     }

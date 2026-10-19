@@ -32,8 +32,8 @@ Or load the published files from jsDelivr:
 
 ```html
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-time@0.1.8-beta/dist/css/bootstrap-time.min.css">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-time@0.1.8-beta/dist/js/bootstrap-time.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-time@0.2.1-beta/dist/css/bootstrap-time.min.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-time@0.2.1-beta/dist/js/bootstrap-time.min.js"></script>
 ```
 
 Local builds use the same paths under `dist/`:
@@ -54,7 +54,7 @@ Minute selection follows the input `step`, including when `step` changes: `60` a
 
 ## Changelog
 
-### 0.1.8-beta
+### 0.2.1-beta
 
 - Requires Bootstrap 5.3.8 instead of Bootstrap 6.
 - Removed the adorn button. The browser time icon stays, and focus and blur still open and close the clock.

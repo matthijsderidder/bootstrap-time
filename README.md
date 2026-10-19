@@ -32,8 +32,8 @@ Or load the published files from jsDelivr:
 
 ```html
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-time@0.2.2-beta/dist/css/bootstrap-time.min.css">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-time@0.2.2-beta/dist/js/bootstrap-time.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-time@0.2.3-beta/dist/css/bootstrap-time.min.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-time@0.2.3-beta/dist/js/bootstrap-time.min.js"></script>
 ```
 
 Local builds use the same paths under `dist/`:
@@ -53,6 +53,10 @@ Add `bs-time` to a time field. The script builds the clock and places it under t
 Minute selection follows the input `step`, including when `step` changes: `60` allows every minute by clicking between the numbers, `900` enables only 00, 15, 30 and 45. See `examples/bootstrap-time.html`.
 
 ## Changelog
+
+### 0.2.3-beta
+
+- The native time picker no longer opens. The browser icon stays.
 
 ### 0.2.2-beta
 
